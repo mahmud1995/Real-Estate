@@ -14,7 +14,7 @@ import { ComponentsModule } from './components/components.module';
     playground: true,
     uploads: false,
     autoSchemaFile: true,
-  }), ComponentsModule
+  }), ComponentsModule        // ==> ichida - API serverga bogliq bulgan mantiqlarni 
 ],
   controllers: [AppController],
   providers: [AppService, AppResolver],
