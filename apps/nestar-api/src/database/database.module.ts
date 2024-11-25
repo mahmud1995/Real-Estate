@@ -7,8 +7,8 @@ import {Connection} from 'mongoose';
         MongooseModule.forRootAsync({
             useFactory: () => ({
                 uri: process.env.NODE_ENV === 'production' 
-                ? process.env.MONGO_PROD 
-                : process.env.MONGO_DEV,
+                ? process.env.MONGO_PROD as string 
+                : process.env.MONGO_DEV as string,
             }),
         }),
     ],
@@ -22,7 +22,7 @@ export class DatabaseModule {
                 process.env.NODE_ENV === 'production' 
                 ? 'production' 
                 : 'development'
-            }db`); 
+            } db`); 
         } else {
             console.log('DB is not connected!');
         }

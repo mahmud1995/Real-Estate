@@ -6,6 +6,7 @@ import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver } from "@nestjs/apollo";
 import { AppResolver } from './app.resolver';
 import { ComponentsModule } from './components/components.module';
+import { DatabaseModule } from './database/database.module';
 
 
 @Module({
@@ -14,7 +15,7 @@ import { ComponentsModule } from './components/components.module';
     playground: true,
     uploads: false,
     autoSchemaFile: true,
-  }), ComponentsModule        // ==> ichida - API serverga bogliq bulgan mantiqlarni 
+  }), ComponentsModule, DatabaseModule        // ==> ichida - API serverga bogliq bulgan mantiqlarni 
 ],
   controllers: [AppController],
   providers: [AppService, AppResolver],
