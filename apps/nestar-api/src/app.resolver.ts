@@ -6,7 +6,6 @@ Follow, Like, Artikl ga uhshagan mantiqlarni - Component ichida komplex jamlab b
 
 import { Query, Resolver} from "@nestjs/graphql";
 
-
 @Resolver() 
 export class AppResolver {
     @Query(() => String)

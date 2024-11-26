@@ -8,14 +8,17 @@ import { AppResolver } from './app.resolver';
 import { ComponentsModule } from './components/components.module';
 import { DatabaseModule } from './database/database.module';
 
-
 @Module({
-  imports: [ConfigModule.forRoot(), GraphQLModule.forRoot({
-    driver: ApolloDriver,
-    playground: true,
-    uploads: false,
-    autoSchemaFile: true,
-  }), ComponentsModule, DatabaseModule        // ==> ichida - API serverga bogliq bulgan mantiqlarni 
+  imports: [
+    ConfigModule.forRoot(), 
+    GraphQLModule.forRoot({
+      driver: ApolloDriver,
+      playground: true,
+      uploads: false,
+      autoSchemaFile: true,
+  }), 
+  ComponentsModule, 
+  DatabaseModule        // ==> ichida - API serverga bogliq bulgan mantiqlarni 
 ],
   controllers: [AppController],
   providers: [AppService, AppResolver],
