@@ -11,7 +11,7 @@ export class MemberResolver {
     
     // Query[GET] & mutation[REST API]
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Signup
-    @Mutation(() => String)
+    @Mutation(() => Member)
     // Pipe integration 1/3: method
     @UsePipes(ValidationPipe) // Pipe lar orqali teskshirish mehanizmi
     public async signup(@Args("input") input: MemberInput): Promise<Member> {

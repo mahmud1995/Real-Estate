@@ -95,7 +95,7 @@ const MemberSchema = new Schema ({
             default: 0,
         },
 
-        memberRanks: {
+        memberRank: {
             type: Number,
             default: 0,
         },

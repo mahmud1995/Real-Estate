@@ -23,7 +23,7 @@ export class Member {
     @Field(() => String)
         memberNick: string;
 
-        memberPassord?: string
+        memberPassword?: string
 
     @Field(( ) => String, {nullable: true})
         memberFullName?:string;
@@ -34,8 +34,8 @@ export class Member {
     @Field(() => String, {nullable: true})
         memberAddress?: string;
 
-    @Field(() => String)
-        memberDesc: string;
+    @Field(() => String, {nullable: true})
+        memberDesc?: string;
 
     @Field(() => Int)
         memberProperties: number;

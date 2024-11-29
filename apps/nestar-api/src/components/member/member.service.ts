@@ -9,7 +9,6 @@ import { Message } from '../../libs/enums/common.enum';
 @Injectable()
 export class MemberService {
     constructor(@InjectModel("Member") private readonly memberModel: Model<Member>) {}
-
     public async signup(input: MemberInput): Promise<Member> {
         // ToDo: Hash password
         try {
@@ -35,7 +34,7 @@ export class MemberService {
         }
 
         // TODO: COmpare user password
-        const isMatch = memberPassword === response.memberPassord;
+        const isMatch = memberPassword === response.memberPassword;
         if(!isMatch) throw new InternalServerErrorException(Message.WRONG_PASSWORD);
 
         return response
