@@ -11,6 +11,7 @@ export class MemberService {
     constructor(@InjectModel("Member") private readonly memberModel: Model<Member>) {}
     public async signup(input: MemberInput): Promise<Member> {
         // ToDo: Hash password
+        // try-catch sababi: api ishga tushgan paytda xato bersa birdaniga qaytarvoradi
         try {
             const result = await this.memberModel.create(input);
             return result;

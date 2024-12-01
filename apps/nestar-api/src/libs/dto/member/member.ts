@@ -2,8 +2,8 @@ import { Field, Int, ObjectType } from "@nestjs/graphql";
 import { ObjectId } from "mongoose";
 import { MemberAuthType, MemberStatus, MemberType } from "../../enums/member.enum";
 
-// backend dan => frontendga yuboriladigan data transferring objject hosil qilamiz
-@ObjectType() // abckend serverdan clientga yuborilayotgan typelar(dto)ni qurish uchun decorator
+// backend dan => frontendga yuboriladigan data transferring object hosil qilamiz
+@ObjectType() // backend serverdan clientga yuborilayotgan typelar(dto)ni qurish uchun decorator
 export class Member {
     @Field(() => String)
         _id: ObjectId;
@@ -28,7 +28,7 @@ export class Member {
     @Field(( ) => String, {nullable: true})
         memberFullName?:string;
 
-    @Field(() => String)
+    @Field(() => String) //A GraphQL scalar type is a primitive (like ID, String, Boolean, or Int)
         memberImage: string;
 
     @Field(() => String, {nullable: true})

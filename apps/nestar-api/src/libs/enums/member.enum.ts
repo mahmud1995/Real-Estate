@@ -5,6 +5,9 @@ export enum MemberType{
     AGENT = "AGENT",
     ADMIN = "ADMIN",
 }
+/*
+[registerEnumType] - used to make your TypeScript enums accessible in your GraphQL schema. 
+*/
 registerEnumType(MemberType, {
     name: "MemberType",
 })
@@ -24,5 +27,5 @@ export enum MemberAuthType {
     TELEGRAM = "TELEGRAM",
 }
 registerEnumType(MemberAuthType, {
-    name: "MamberAuthType",
+    name: "MemberAuthType",
 })

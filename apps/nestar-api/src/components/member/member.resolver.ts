@@ -3,13 +3,15 @@ import { MemberService } from './member.service';
 import { InternalServerErrorException, UsePipes, ValidationPipe } from '@nestjs/common';
 import { LoginInput, MemberInput } from '../../libs/dto/member/member.input';
 import { Member } from '../../libs/dto/member/member';
-// import { Query } from '@nestjs/common';
 
 @Resolver()
+/*
+    - MemberServiceni chaqirishdan maqsad: MemberResolverning ixtiyoriy query ida ishlatishimiz mumkin
+    - Query[GET] & mutation[REST API] mantiqlarini hosil qilamiz
+    - @Mutation(() => Member): Mutation bizga Member[dto[member.ts]] ni qaytaradi
+*/
 export class MemberResolver {
-    constructor( private readonly memberService: MemberService) {}
-    
-    // Query[GET] & mutation[REST API]
+    constructor( private readonly memberService: MemberService) {} 
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Signup
     @Mutation(() => Member)
     // Pipe integration 1/3: method
@@ -23,7 +25,6 @@ export class MemberResolver {
             console.log("error, Signup:", err);
             throw new InternalServerErrorException(err);
         }
-    
     } 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -31,7 +32,6 @@ export class MemberResolver {
     @Mutation(() => Member)
     @UsePipes(ValidationPipe)
     public async login(@Args('input') input: LoginInput): Promise<Member> {
-
         try {
             console.log("Mutation: login");
             return this.memberService.login(input);
