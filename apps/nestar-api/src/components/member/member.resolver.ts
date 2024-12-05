@@ -11,31 +11,21 @@ import { Member } from '../../libs/dto/member/member';
     - @Mutation(() => Member): Mutation bizga Member[dto[member.ts]] ni qaytaradi
 */
 export class MemberResolver {
-    constructor( private readonly memberService: MemberService) {} 
+    constructor( private readonly memberService: MemberService) {}
+    
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Signup
     @Mutation(() => Member)
     public async signup(@Args("input") input: MemberInput): Promise<Member> {
-        try {
-            console.log("Mutation: signup");
-            console.log("input:",input)
-            return this.memberService.signup(input);
-        } catch(err) {
-            console.log("error, Signup:", err);
-            throw new InternalServerErrorException(err);
-        }
+        console.log("Mutation: signup");
+        return this.memberService.signup(input);
     } 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Login
     @Mutation(() => Member)
     public async login(@Args('input') input: LoginInput): Promise<Member> {
-        try {
-            console.log("Mutation: login");
-            return this.memberService.login(input);
-        } catch(err) {
-            console.log("error, Signup:", err);
-            throw new InternalServerErrorException(err);
-        }
+        console.log("Mutation: login");
+        return this.memberService.login(input);
     }
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 

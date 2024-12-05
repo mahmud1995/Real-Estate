@@ -6,74 +6,80 @@ import { MemberAuthType, MemberStatus, MemberType } from "../../enums/member.enu
 @ObjectType() // backend serverdan clientga yuborilayotgan typelar(dto)ni qurish uchun decorator
 export class Member {
     @Field(() => String)
-        _id: ObjectId;
+    _id: ObjectId;
 
     @Field(() => MemberType) // graphql ning registerEnumType orqali enum urniga ishlatish mumkin
-        memberType: MemberType
+    memberType: MemberType
 
     @Field(() => MemberStatus) // graphql ning registerEnumType orqali enum urniga ishlatish mumkin
-        memberStatus: MemberStatus
+    memberStatus: MemberStatus
 
     @Field(() => MemberAuthType)
-        memberAuthType: MemberAuthType;
+    memberAuthType: MemberAuthType;
 
     @Field(() => String)
-        memberPhone: string;
+    memberPhone: string;
     
     @Field(() => String)
-        memberNick: string;
+    memberNick: string;
 
-        memberPassword?: string
+    memberPassword?: string
 
-    @Field(( ) => String, {nullable: true})
-        memberFullName?:string;
+    @Field(() => String, {nullable: true})
+    memberFullName?:string;
 
     @Field(() => String) //A GraphQL scalar type is a primitive (like ID, String, Boolean, or Int)
-        memberImage: string;
+    memberImage: string;
 
     @Field(() => String, {nullable: true})
-        memberAddress?: string;
+    memberAddress?: string;
 
     @Field(() => String, {nullable: true})
-        memberDesc?: string;
+    memberDesc?: string;
 
     @Field(() => Int)
-        memberProperties: number;
+    memberProperties: number;
 
     @Field(() => Int)
-        memberArticles: number;
+    memberArticles: number;
 
     @Field(() => Int)
-        memberFollowers: number;
+    memberFollowers: number;
 
     @Field(() => Int)
-        memberFollowings: number;
-
-    @Field(() => Int)
-        memberLikes: number;
-
-    @Field(() => Int)
-        memberViews: number;
-
-    @Field(() => Int)
-        memberComments: number;
+    memberFollowings: number;
     
     @Field(() => Int)
-        memberWarnings: number;
+    memberPoints: number;
 
     @Field(() => Int)
-        memberBlocks: number;
+    memberLikes: number;
 
     @Field(() => Int)
-        memberRank: number;
+    memberViews: number;
+
+    @Field(() => Int)
+    memberComments: number;
+    
+    @Field(() => Int)
+    memberWarnings: number;
+
+    @Field(() => Int)
+    memberBlocks: number;
+
+    @Field(() => Int)
+    memberRank: number;
 
     @Field(() => Date, {nullable: true})
-        deletedAt?: Date; 
+    deletedAt?: Date; 
 
     @Field(() => Date)
-        createdAt?: Date; 
+    createdAt?: Date; 
     
     @Field(() => Date)
-        updatedAt?: Date; 
+    updatedAt?: Date; 
+
+    @Field(() => String, { nullable:true})
+    accessToken?: string;
 }
 
