@@ -10,12 +10,15 @@ import { AuthService } from '../auth/auth.service';
 @Injectable()
 export class MemberService {
     constructor(@InjectModel("Member") private readonly memberModel: Model<Member>, private authService: AuthService) {}
+    
     public async signup(input: MemberInput): Promise<Member> {
         // ToDo: Hash password
         input.memberPassword = await this.authService.hashPassword(input.memberPassword)
         // try-catch sababi: api ishga tushgan paytda xato bersa birdaniga qaytarvoradi
         try {
             const result = await this.memberModel.create(input);
+
+            result.accessToken = await this.authService.createToken(result);
             return result;
         } catch(err) {
             console.log("Error, Service.model:", err.message);
@@ -39,7 +42,8 @@ export class MemberService {
         // TODO: Compare user password
         const isMatch = await this.authService.comparePasswords(input.memberPassword, response.memberPassword);
         if(!isMatch) throw new InternalServerErrorException(Message.WRONG_PASSWORD);
-
+        
+        response.accessToken = await this.authService.createToken(response);
         return response
     }
 
