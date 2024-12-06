@@ -29,16 +29,15 @@ export class MemberResolver {
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     // Authenticated: (USER, AGENT, ADMIN)
-    @UseGuards(AuthGuard)
 
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Login
     @Mutation(() => Member)
     public async login(@Args('input') input: LoginInput): Promise<Member> {
         console.log("Mutation: login");
         return this.memberService.login(input);
-    }
+    } 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
+    @UseGuards(AuthGuard)
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>UpdateMember
     public async updateMember(@AuthMember('_id') memberId: ObjectId): Promise<string> {
         console.log('Mutation: updateMember');
