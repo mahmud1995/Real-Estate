@@ -117,18 +117,18 @@ export class MemberResolver {
     /** UPLOADER **/
     @UseGuards(AuthGuard)
     @Mutation((returns) => String)
-    public async imageUploader(
-        @Args({ name: 'file', type: () => GraphQLUpload })
-        { createReadStream, filename, mimetype }: FileUpload,
-        @Args('target') target: String,
+    public async imageUploader( // GraphQL based technology dan foydalanadi
+        @Args({ name: 'file', type: () => GraphQLUpload }) // Argumentlardan file nomi ostida kirib kelayotgan image qabul-type-graphql upload
+        { createReadStream, filename, mimetype }: FileUpload, // malumotlarni olib beryapti
+        @Args('target') target: String, // target nomli argument hosil qildik=> serverga yuborilayotgan image qaysi manzilga saqlashni 
     ): Promise<string> {
         console.log("Mutation: imageUploader");
-        if (!filename) throw new Error(Message.UPLOAD_FAILED);
-    const validMime = validMimeTypes.includes(mimetype);
+        if (!filename) throw new Error(Message.UPLOAD_FAILED); // tepada kelayotgan file nomini tekshirib == bumasa error throw
+    const validMime = validMimeTypes.includes(mimetype); // config.ts da berilgan formatlardan bulsa keyingi jarayonga utkazadi
     if (!validMime) throw new Error(Message.PROVIDE_ALLOWED_FORMAT);
 
-    const imageName = getSerialForImage(filename);
-    const url = `uploads/${target}/${imageName}`;
+    const imageName = getSerialForImage(filename); // tepada hamma shartlar bajarilsa ==> rasm ucun random nom hosil qilish mantigini caqirib
+    const url = `uploads/${target}/${imageName}`; // uploadsning target nomli folderiga saqlashni buyurdik
     const stream = createReadStream();
 
     const result = await new Promise((resolve, reject) => {
