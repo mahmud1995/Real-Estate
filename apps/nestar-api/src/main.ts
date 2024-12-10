@@ -9,9 +9,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new LoggingInterceptor());
+
   app.enableCors({ origin: true, credentials: true });
   app.use(graphqlUploadExpress({MaxFileSize: 15000000, maxFiles: 10}))  
-  app.use("/upload", express.static('./upload'))
+  app.use("/uploads", express.static('./uploads'))
+  
   await app.listen(process.env.PORT_API ?? 3000);
 }
 bootstrap();
