@@ -29,7 +29,7 @@ export class Member {
     memberFullName?:string;
 
     @Field(() => String) //A GraphQL scalar type is a primitive (like ID, String, Boolean, or Int)
-    memberImage: string;
+    memberImage?: string;
 
     @Field(() => String, {nullable: true})
     memberAddress?: string;
