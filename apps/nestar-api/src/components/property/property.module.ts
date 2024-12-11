@@ -5,6 +5,7 @@ import PropertySchema from '../../schemas/Property.model';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from '../auth/auth.module';
 import { ViewModule } from '../view/view.module';
+import { MemberModule } from '../member/member.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { ViewModule } from '../view/view.module';
         },
     ]),
     AuthModule, // AuthModule da UseGuards larni chaqirib olamiz
-    ViewModule // viewmodule ga tegishli viewServiceni bemalol ishlatamiz
+    ViewModule, // viewmodule ga tegishli viewServiceni bemalol ishlatamiz
+    MemberModule
   ],
 
   providers: [PropertyResolver, PropertyService]
