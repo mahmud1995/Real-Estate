@@ -1,10 +1,12 @@
 import { Field, InputType, Int } from "@nestjs/graphql";
-import { IsIn, IsInt, IsNotEmpty, IsOptional, Length, Min } from "class-validator";
+import { IsInt, IsNotEmpty, IsOptional, Length, Min } from "class-validator";
 import { PropertyLocation, PropertyType } from "../../enums/property.enum";
 import { ObjectId } from "mongoose";
 
+
 @InputType()
 export class PropertyInput {
+
     @IsNotEmpty()
     @Field(() => PropertyType)
     propertyType: PropertyType;
@@ -14,22 +16,21 @@ export class PropertyInput {
     propertyLocation: PropertyLocation;
 
     @IsNotEmpty()
-    @Length(3, 100)
+    @Length(5, 100)
     @Field(() => String)
     propertyAddress: string;
 
-
     @IsNotEmpty()
-    @Length(3, 100)
+    @Length(5, 100)
     @Field(() => String)
     propertyTitle: string;
 
     @IsNotEmpty()
-    @Field(() => Number)
+    @Field(() => Int)
     propertyPrice: number;
 
     @IsNotEmpty()
-    @Field(() => Number)
+    @Field(() => Int)
     propertySquare: number;
 
     @IsNotEmpty()
@@ -49,24 +50,21 @@ export class PropertyInput {
     propertyImages: string[];
 
     @IsOptional()
-    @Length(5, 500)
-    @Field(() => String, { nullable: true })
+    @Length(50, 500)
+    @Field(() => String, {nullable: true})
     propertyDesc?: string;
 
     @IsOptional()
-    @Field(() => Boolean, { nullable: true })
-    propertyRent?: boolean;
-
-    memberId?: ObjectId;
+    @Field(() => Boolean, {nullable: true})
+    propertyBarter?: boolean;
 
     @IsOptional()
-    @Field(() => Date, { nullable: true })
+    @Field(() => Boolean, {nullable: true})
+    propertyRent?: boolean;
+
+    memberId: ObjectId;
+    
+    @Field(()=> Date, {nullable: true})
     constructedAt?: Date;
-
-
-
-
-
-
 
 }

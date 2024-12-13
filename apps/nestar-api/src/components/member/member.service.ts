@@ -70,14 +70,6 @@ export class MemberService {
         return result;
     }
 
-
-
-
-
-
-
-
-
     public async getMember(memberId: ObjectId,  targetId: ObjectId): Promise<Member> {
         // search object 
         const search: T = {
