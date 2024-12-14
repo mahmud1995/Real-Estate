@@ -9,12 +9,7 @@ import { MemberModule } from '../member/member.module';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-        {
-            name: "Property",
-            schema: PropertySchema,
-        },
-    ]),
+    MongooseModule.forFeature([{ name: "Property", schema: PropertySchema}]),
     AuthModule, // AuthModule da UseGuards larni chaqirib olamiz
     ViewModule, // viewmodule ga tegishli viewServiceni bemalol ishlatamiz
     MemberModule
