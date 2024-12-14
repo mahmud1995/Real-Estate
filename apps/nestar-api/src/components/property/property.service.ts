@@ -233,7 +233,18 @@ export class PropertyService {
                 targetKey: 'memberProperties',
                 modifier: -1,
             });
+            /* Tepdagai mantiq: Agar property soltilgan yoki uchirilgan bulsa ==> 
+                memberProperties 1taga kamayadi
+            */
         }
+        return result;
+    }
+
+    public async removePropertyByAdmin(propertyId: ObjectId): Promise<Property> {
+        const search: T = { _id: propertyId, PropertyStatus: PropertyStatus.DELETE };
+        const result = await this.propertyModel.findOneAndDelete(search).exec();
+        if( !result ) throw new InternalServerErrorException(Message.REMOVE_FAILED);
+
         return result;
     }
 }
