@@ -30,7 +30,6 @@ export class PropertyService {
                 targetKey: "memberProperties", 
                 modifier: 1,
             })
-
             return result
         } catch (err) {
             console.log("Error, Service.model:", err.message);
