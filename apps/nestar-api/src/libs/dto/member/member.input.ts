@@ -63,7 +63,7 @@ export class AgentsInquiry {
     limit: number;
 
     @IsOptional()
-    @IsIn([availableAgentSorts])
+    @IsIn(availableAgentSorts)
     @Field(() => String, { nullable: true })
     sort?: string;
 
@@ -81,9 +81,11 @@ export class MISearch {
     @IsOptional()
     @Field(() => MemberStatus, {nullable: true})
     memberStatus?: MemberStatus;
+
     @IsOptional()
     @Field(() => MemberType, {nullable: true})
     memberType?: MemberType;
+    
     @IsOptional()
     @Field(() => String, {nullable: true})
     text?: string;

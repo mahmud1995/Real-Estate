@@ -1,4 +1,4 @@
-import { Mutation, Resolver, Query, Args, ArgsType } from '@nestjs/graphql';
+import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { MemberService } from './member.service';
 import { UseGuards } from '@nestjs/common';
 import { AgentsInquiry, LoginInput, MemberInput, MembersInquiry } from '../../libs/dto/member/member.input';
@@ -15,16 +15,13 @@ import { WithoutGuard } from '../auth/guards/without.guard';
 import { GraphQLUpload, FileUpload } from "graphql-upload";
 import { createWriteStream } from 'fs';
 import { Message } from '../../libs/enums/common.enum';
-import { resolve } from 'path';
-import { rejects } from 'assert';
 
-
-@Resolver()
 /*
     - MemberServiceni chaqirishdan maqsad: MemberResolverning ixtiyoriy query ida ishlatishimiz mumkin
     - Query[GET] & mutation[REST API] mantiqlarini hosil qilamiz
     - @Mutation(() => Member): Mutation bizga Member[dto[member.ts]] ni qaytaradi
 */
+@Resolver()
 export class MemberResolver {
     constructor( private readonly memberService: MemberService) {}
 
@@ -41,6 +38,21 @@ export class MemberResolver {
         return await this.memberService.login(input);
     } 
 
+    @UseGuards(AuthGuard)
+    @Query(() => String)
+    public async checkAuth(@AuthMember('memberNick') memberNick: Member): Promise<string> {
+        console.log('Mutation: checkAuth');
+        console.log('memberNick:', memberNick);
+        return `Hi ${memberNick}`;
+    }
+
+    @Roles(MemberType.USER, MemberType.AGENT)
+    @UseGuards(RolesGuard)
+    @Query(() => String)
+    public async checkAuthRoles(@AuthMember() authMember: Member): Promise<string> {
+        console.log('Query: checkAuthRoles');
+        return `Hi ${authMember.memberNick}, you are ${authMember.memberType} (memberId: ${authMember._id})`;
+    }
 
     @UseGuards(AuthGuard)
     @Mutation(() => Member)
@@ -50,7 +62,7 @@ export class MemberResolver {
     ): Promise<Member> {
         console.log('Mutation: updateMember');
         delete input._id;
-        return this.memberService.updateMember(memberId, input);
+        return await this.memberService.updateMember(memberId, input);
     }
 
 
@@ -63,32 +75,13 @@ export class MemberResolver {
         @AuthMember('_id') memberId: ObjectId
     ): Promise<Member> {
         console.log("Query: getMember");
-        console.log("memberId:", memberId)
         const targetId = shapeIntoMongoObjectId(input);
         return await this.memberService.getMember(memberId, targetId);
-    }
-
-
-    @UseGuards(AuthGuard)
-    @Query(() => String)
-    public async checkAuth(@AuthMember('memberNick') memberNick: Member): Promise<string> {
-        console.log('Mutation: checkAuth');
-        console.log('memberNick:', memberNick);
-        
-        return `Hi ${memberNick}`;
-    }
-
-    @Roles(MemberType.USER, MemberType.AGENT)
-    @UseGuards(RolesGuard)
-    @Query(() => String)
-    public async checkAuthRoles(@AuthMember() authMember: Member): Promise<string> {
-        console.log('Query: checkAuthRoles');
-        return `Hi ${authMember.memberNick}, you are ${authMember.memberType} (memberId: ${authMember._id})`;
     }
     
 
     @UseGuards(WithoutGuard)
-    @Query(() => Member)
+    @Query(() => Members)
     public async getAgents(
         @Args('input') input: AgentsInquiry, 
         @AuthMember('_id') memberId: ObjectId): Promise<Members> {

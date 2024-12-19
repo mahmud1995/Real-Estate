@@ -79,14 +79,14 @@ export class Member {
     @Field(() => Date)
     updatedAt?: Date; 
 
-    @Field(() => String, { nullable:true})
+    @Field(() => String, { nullable: true})
     accessToken?: string;
 }
 
 @ObjectType()
 export class TotalCounter {
     @Field(() => Int, {nullable: true})
-    total: number
+    total: number;
 }
 
 @ObjectType()
