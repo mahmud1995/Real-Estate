@@ -1,18 +1,17 @@
-import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { BoardArticleService } from './board-article.service';
+import { BoardArticle, BoardArticles } from '../../libs/dto/board-article/board-article';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth/guards/auth.guard';
-import { BoardArticle, BoardArticles } from '../../libs/dto/board-article/board-article';
 import { AllBoardArticlesInquiry, BoardArticleInput, BoardArticlesInquiry } from '../../libs/dto/board-article/board-article.input';
 import { AuthMember } from '../auth/decorators/authMember.decorator';
 import { ObjectId } from 'mongoose';
-import { WithoutGuard } from '../auth/guards/without.guard';
 import { shapeIntoMongoObjectId } from '../../libs/config';
+import { WithoutGuard } from '../auth/guards/without.guard';
 import { BoardArticleUpdate } from '../../libs/dto/board-article/board-article.update';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { MemberType } from '../../libs/enums/member.enum';
 import { RolesGuard } from '../auth/guards/roles.guard';
-import { MemberInput } from '../../libs/dto/member/member.input';
 
 @Resolver()
 export class BoardArticleResolver {
@@ -40,10 +39,10 @@ export class BoardArticleResolver {
     }
 
     @UseGuards(AuthGuard)
-    @Mutation((returns) => BoardArticles)
+    @Mutation((returns) => BoardArticle)
     public async updateBoardArticle(
-        @Args('input') input: BoardArticleUpdate,
-        @AuthMember('_id') memberId: ObjectId,
+        @Args('input') input: BoardArticleUpdate, 
+        @AuthMember('_id') memberId: ObjectId
     ): Promise<BoardArticle> {
         console.log('Mutation: updateBoardArticle');
         input._id = shapeIntoMongoObjectId(input._id);

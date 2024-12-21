@@ -51,8 +51,9 @@ export class PropertyResolver {
         return await this.propertyService.updateProperty(memberId, input);
     };
 
+
     @UseGuards(WithoutGuard)
-    @Query((returns) => Property)
+    @Query((returns) => Properties)
     public async getProperties(
         @Args("input") input: PropertiesInquiry, // qaysi property id ni olmoqchimiz
         @AuthMember("_id") memberId: ObjectId,
@@ -60,6 +61,7 @@ export class PropertyResolver {
         console.log("Query; getProperty")
         return await this.propertyService.getProperties(memberId, input);
     };
+
 
     @Roles(MemberType.AGENT)
     @UseGuards(RolesGuard)

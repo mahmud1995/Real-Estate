@@ -18,7 +18,7 @@ registerEnumType(PropertyStatus, {
 	name: 'PropertyStatus',
 });
 
-export enum PropertyLocation { 
+export enum PropertyLocation {
 	SEOUL = 'SEOUL',
 	BUSAN = 'BUSAN',
 	INCHEON = 'INCHEON',
