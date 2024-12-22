@@ -85,7 +85,7 @@ export class BoardArticleResolver {
     @Roles(MemberType.ADMIN)
     @UseGuards(RolesGuard)
     @Mutation(() => BoardArticle)
-    public async updateBoardArticlesByAdmin(
+    public async updateBoardArticleByAdmin(
         @Args('input') input: BoardArticleUpdate,
         @AuthMember('_id') memberId: ObjectId,
     ): Promise<BoardArticle> {
