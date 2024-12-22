@@ -51,7 +51,7 @@ export class BoardArticleResolver {
 
     @UseGuards(WithoutGuard)
     @Query((returns) => BoardArticles)
-    public async getBoardArticlesInquiry(
+    public async getBoardArticles(
         @Args('input') input: BoardArticlesInquiry,
         @AuthMember('_id')  memberId: ObjectId,
     ): Promise<BoardArticles> {

@@ -2,6 +2,7 @@ import { Field, Int, ObjectType } from "@nestjs/graphql";
 import { ObjectId } from "mongoose";
 import { PropertyLocation, PropertyStatus, PropertyType } from "../../enums/property.enum";
 import { Member, TotalCounter } from "../member/member";
+import { MeLiked } from "../like/like";
 
 // backend dan => frontendga yuboriladigan data transferring object hosil qilamiz
 @ObjectType() // backend serverdan clientga yuborilayotgan typelar(dto)ni qurish uchun decorator
@@ -79,7 +80,10 @@ export class Property {
     updatedAt?: Date; 
 
     /* from aggregation */
-
+    //
+    @Field(() => [MeLiked], { nullable: true })
+    meLiked?: MeLiked[];
+    
     @Field(() => Member, { nullable: true })
     memberData?: Member;
 

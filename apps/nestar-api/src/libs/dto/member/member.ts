@@ -1,6 +1,7 @@
 import { Field, Int, ObjectType } from "@nestjs/graphql";
 import { ObjectId } from "mongoose";
 import { MemberAuthType, MemberStatus, MemberType } from "../../enums/member.enum";
+import { MeLiked } from "../like/like";
 
 // backend dan => frontendga yuboriladigan data transferring object hosil qilamiz
 @ObjectType() // backend serverdan clientga yuborilayotgan typelar(dto)ni qurish uchun decorator
@@ -81,6 +82,10 @@ export class Member {
 
     @Field(() => String, { nullable: true})
     accessToken?: string;
+
+    /* */
+    @Field(() => [MeLiked], { nullable: true })
+    meLiked?: MeLiked[];
 }
 
 @ObjectType()

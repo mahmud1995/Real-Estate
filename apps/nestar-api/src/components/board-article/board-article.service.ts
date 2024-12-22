@@ -56,6 +56,8 @@ export class BoardArticleService {
                 await this.boardArticleStatsEditor({ _id: articleId, targetKey: 'articleViews', modifier: 1 });
                 targetBoardArticle.articleViews++;
             }
+            const likeInput = { memberId: memberId, likeRefId: articleId, likeGroup: LikeGroup.ARTICLE};
+            targetBoardArticle.meLiked = await this.likeService.checkLikeExistence(likeInput);
         }
         targetBoardArticle.memberData = await this.memberService.getMember(null, targetBoardArticle.memberId);
         return targetBoardArticle
@@ -83,32 +85,33 @@ export class BoardArticleService {
 
     public async getBoardArticles(memberId: ObjectId, input: BoardArticlesInquiry): Promise<BoardArticles> {
         const { articleCategory, text } = input.search;
-        const match: T = { BoardArticleStatus: BoardArticleStatus.ACTIVE};
+        const match: T = { articleStatus: BoardArticleStatus.ACTIVE };
         const sort: T = { [input?.sort ?? 'createdAt']: input?.direction ?? Direction.DESC };
 
-        if (articleCategory) match.articleCategory = articleCategory;
-        if (text) match.articleTitle =  {$regex: new RegExp(text, 'i')};
-        if (input.search?.memberId) {
+        if(articleCategory) match.articleCategory = articleCategory;
+        if(text) match.articleTitle = { $regex: new RegExp(text, 'i') };
+        if(input.search?.memberId) {
             match.memberId = shapeIntoMongoObjectId(input.search.memberId);
         }
-        console.log('match: ', match);
 
-        const result = await this.boardArticleModel.aggregate([
+        const result = await this.boardArticleModel
+        .aggregate([
             {$match: match},
             {$sort: sort},
             {
                 $facet: {
                     list: [
-                        {$skip: (input.page - 1) * input.limit },
-                        {$limit: input.limit },
-                        // meLiked
+                        {$skip: (input.page -1) * input.limit},
+                        {$limit: input.limit},
+                        // lookupAuthMemberLiked(memberId),
                         lookupMember,
                         {$unwind: '$memberData'},
                     ],
-                    metaCounter: [{ $count: 'total'}],
+                    metaCounter: [{$count: 'total'}],
                 },
             },
-        ]).exec();
+        ])
+        .exec();
         if(!result.length) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
 
         return result[0];
