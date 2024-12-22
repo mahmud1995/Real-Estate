@@ -2,35 +2,37 @@ import { Field, Int, ObjectType } from "@nestjs/graphql";
 import { ObjectId } from "mongoose";
 import { MemberAuthType, MemberStatus, MemberType } from "../../enums/member.enum";
 import { MeLiked } from "../like/like";
+import { MeFollowed } from "../follow/follow";
 
-// backend dan => frontendga yuboriladigan data transferring object hosil qilamiz
-@ObjectType() // backend serverdan clientga yuborilayotgan typelar(dto)ni qurish uchun decorator
+
+
+@ObjectType()
 export class Member {
     @Field(() => String)
     _id: ObjectId;
 
-    @Field(() => MemberType) // graphql ning registerEnumType orqali enum urniga ishlatish mumkin
-    memberType: MemberType
+    @Field(() => MemberType)
+    memberType: MemberType;
 
-    @Field(() => MemberStatus) // graphql ning registerEnumType orqali enum urniga ishlatish mumkin
-    memberStatus: MemberStatus
+    @Field(() => MemberStatus)
+    memberStatus: MemberStatus;
 
     @Field(() => MemberAuthType)
     memberAuthType: MemberAuthType;
 
     @Field(() => String)
     memberPhone: string;
-    
+
     @Field(() => String)
     memberNick: string;
 
-    memberPassword?: string
+    memberPassword?: string;
 
     @Field(() => String, {nullable: true})
-    memberFullName?:string;
+    memberFullName?: string;
 
-    @Field(() => String) //A GraphQL scalar type is a primitive (like ID, String, Boolean, or Int)
-    memberImage?: string;
+    @Field(() => String)
+    memberImage: string;
 
     @Field(() => String, {nullable: true})
     memberAddress?: string;
@@ -49,7 +51,7 @@ export class Member {
 
     @Field(() => Int)
     memberFollowings: number;
-    
+
     @Field(() => Int)
     memberPoints: number;
 
@@ -61,37 +63,40 @@ export class Member {
 
     @Field(() => Int)
     memberComments: number;
-    
+
+    @Field(() => Int)
+    memberRank: number;
+
     @Field(() => Int)
     memberWarnings: number;
 
     @Field(() => Int)
     memberBlocks: number;
 
-    @Field(() => Int)
-    memberRank: number;
+    @Field(() => Date, {nullable: true})
+    deletedAt?: Date;
+
+    @Field(() => Date)
+    createdAt: Date;
 
     @Field(() => Date, {nullable: true})
-    deletedAt?: Date; 
+    updatedAt?: Date;
 
-    @Field(() => Date)
-    createdAt?: Date; 
-    
-    @Field(() => Date)
-    updatedAt?: Date; 
-
-    @Field(() => String, { nullable: true})
+    @Field(() => String, {nullable: true})
     accessToken?: string;
 
-    /* */
-    @Field(() => [MeLiked], { nullable: true })
+    /** from aggregation **/
+    @Field(() => [MeLiked], {nullable: true})
     meLiked?: MeLiked[];
+
+    @Field(() => [MeFollowed], {nullable: true})
+    meFollowed?: MeFollowed[];
 }
 
 @ObjectType()
 export class TotalCounter {
     @Field(() => Int, {nullable: true})
-    total: number;
+    total: number
 }
 
 @ObjectType()
