@@ -35,8 +35,8 @@ export const lookupAuthMemberLiked = (memberId: T, targetRefId: string = '$_id')
         $lookup: {
             from: 'likes',
             let: {
-                localLikeRefId: targetRefId,
-                localMemberId: memberId,
+                localLikeRefId: targetRefId, // localLIkeRefId: '$_id'
+                localMemberId: memberId, // localMemberId: dsafjsdkfjsdf
                 localMyFavorite: true
             },
             pipeline: [
@@ -128,3 +128,12 @@ export const lookupFollowerData = {
         as: 'followerData',
     },
 };
+
+export const lookupFavorite = {
+    $lookup: {
+        from : 'members',
+        localField: 'favoriteProperty.memberId',
+        foreignField: '_id',
+        as: 'favoriteProperty.memberData',
+    },
+}
