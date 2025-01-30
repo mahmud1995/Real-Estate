@@ -181,7 +181,7 @@ export class MemberService {
     }
 
 
-    public async updateMembersByAdmin(input: MemberUpdate): Promise<Member> {
+    public async updateMemberByAdmin(input: MemberUpdate): Promise<Member> {
         const result: Member = await this.memberModel
         .findOneAndUpdate({_id: input._id}, input, {new: true})
         .exec();
