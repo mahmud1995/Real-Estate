@@ -6,7 +6,7 @@ services:
     ports:
       - 4001:3007
     volumes:
-      - ./:/usr/src/nestar
+      - .:/usr/src/nestar
     working_dir: /usr/src/nestar
 
     networks:
@@ -14,9 +14,6 @@ services:
 
     # FOR PRODUCTION
     command: bash -c "npm install && npm run build && npm run start:prod"
-
-    # FOR DEVELOPMENT
-    # command: bash -c "npm install && npm run start:prod"
 
   nestar-batch:
     container_name: nestar-batch
@@ -40,3 +37,9 @@ networks:
 # nestar-next:  localhost:4000 <=> container:3000
 # nestar-api:   localhost:4001 <=> container:3007
 # nestar-batch: localhost:4002 <=> container:3008
+
+# docker compose up -d
+# docker compose stop
+# docker compose start
+# docker compose restart
+# docker compose stop && docker compose rm -f
