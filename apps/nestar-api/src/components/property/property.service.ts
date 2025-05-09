@@ -202,6 +202,7 @@ export class PropertyService {
 							lookupMember,
 							{ $unwind: '$memberData' },
 						],
+						metaCounter: [{ $count: 'total' }],
 					},
 				},
 			])
