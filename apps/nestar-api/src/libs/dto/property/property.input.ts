@@ -62,8 +62,10 @@ export class PropertyInput {
 	@Field(() => Boolean, { nullable: true })
 	propertyRent?: boolean;
 
+	// bu frontendan yuborilishi talab etilmaydi. Authentication bosqichida biz memberID ni qabul qilib olamiz chunki
 	memberId?: ObjectId;
 
+	@IsOptional()
 	@Field(() => Date, { nullable: true })
 	constructedAt?: Date;
 }
@@ -111,11 +113,11 @@ class PISearch {
 
 	@IsOptional()
 	@Field(() => [Int], { nullable: true })
-	roomsList?: Number[];
+	roomsList?: number[];
 
 	@IsOptional()
 	@Field(() => [Int], { nullable: true })
-	bedsList?: Number[];
+	bedsList?: number[];
 
 	@IsOptional()
 	@IsIn(availableOptions, { each: true })
